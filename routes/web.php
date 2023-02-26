@@ -1,5 +1,6 @@
 <?php
-
+use App\Http\Controllers\documentoController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,10 +15,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('bienvenido');
+    return view('welcome');
 });
 
 
 Route::get('/segundapagina', function () {
     return view('login');
 });
+
+
+Route::get("/documentos",[documentoController::class,"index"])->name("documentos.index");
+
+Auth::routes();
+
+
+Route::resource('user', UserController::class)->middleware('auth');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
