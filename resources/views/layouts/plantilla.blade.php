@@ -7,8 +7,24 @@
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
+  <!-- Font Awesome v5
+    usar la version free
+    https://fontawesome.com/v5/search?o=r&m=free
+-->
   <link rel="stylesheet" href="public/adminlte/plugins/fontawesome-free/css/all.min.css">
+
+ <!-- SweetAlert2 -->
+ <link rel="stylesheet" href="public/adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+ <!-- Toastr -->
+ <link rel="stylesheet" href="public/adminlte/plugins/toastr/toastr.min.css">
+
+ <!-- Select2 -->
+ <link rel="stylesheet" href="public/adminlte/plugins/select2/css/select2.min.css">
+ <link rel="stylesheet" href="public/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+ <!-- Bootstrap4 Duallistbox -->
+ <link rel="stylesheet" href="public/adminlte/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+  <!-- BS Stepper -->
+  <link rel="stylesheet" href="public/adminlte/plugins/bs-stepper/css/bs-stepper.min.css">
 
     <!-- DataTables -->
     <link rel="stylesheet" href="public/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -17,6 +33,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="public/adminlte/dist/css/adminlte.min.css">
 
+  @yield("style")
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -44,12 +61,16 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
-                <a class="dropdown-item" href="{{route('user.index')}}">Usuarios</a>
+                @can('Roles')
+                <a class="dropdown-item" href="{{route('rol.index')}}"><i class="fas fa-cogs"></i> Roles</a>
+                @endcan
+                @can('Usuarios')
+                <a class="dropdown-item"  href="{{route('user.index')}}"><i class="fas fa-users"></i> Usuarios  </a>
+                @endcan
 
                 <a class="dropdown-item" href="{{ route('logout') }}"
                    onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();">
+                                 document.getElementById('logout-form').submit();"> <i class="fas fa-power-off"></i>
                    Salir
                 </a>
 
@@ -69,22 +90,22 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../../index3.html" class="brand-link">
+    <a href="#" class="brand-link">
       <img src="public/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">AdminLTE 3</span>
     </a>
 
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar"><br>
       <!-- Sidebar user (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      {{-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           <img src="public/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">Alexander Pierce</a>
         </div>
-      </div>
+      </div> --}}
 
 
       <!-- Sidebar Menu -->
@@ -102,6 +123,9 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+
+
+
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{ route('home') }}" class="nav-link">
@@ -109,12 +133,12 @@
                   <p>Vista Inicial</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Flot</p>
                 </a>
-              </li>
+              </li> --}}
 
 
             </ul>
@@ -129,18 +153,26 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+
+
+              @can('Reportes')
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>General Elements</p>
+                  <p>Reportes r</p>
                 </a>
               </li>
+              @endcan
+
+              @can('Usuarios')
               <li class="nav-item">
                 <a href="{{ route('user.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Usuarios</p>
+                  <p>Usuarios u</p>
                 </a>
               </li>
+              @endcan
+
 
 
             </ul>
@@ -153,25 +185,24 @@
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
+
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Simple Tables</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>DataTables</p>
-                </a>
-              </li>
-              <li class="nav-item">
+                @can('Documentos')
+               <li class="nav-item">
                 <a href="{{ route('documentos.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Documentos</p>
+                  <p>Documentos d</p>
                 </a>
               </li>
+              @endcan
+              @can('Usuarios')
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>DataTables u</p>
+                </a>
+              </li>
+              @endcan
             </ul>
           </li>
 
@@ -189,9 +220,11 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          {{-- <div class="col-sm-6">
-            <h1>Blank Page</h1>
-          </div> --}}
+           <div class="col-sm-6">
+            <h1>
+                @yield("titulo")
+            </h1>
+          </div>
 
         </div>
       </div><!-- /.container-fluid -->
@@ -226,6 +259,18 @@
 <script src="public/adminlte/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="public/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="public/adminlte/plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- Toastr -->
+<script src="public/adminlte/plugins/toastr/toastr.min.js"></script>
+<!-- Select2 -->
+<script src="public/adminlte/plugins/select2/js/select2.full.min.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="public/adminlte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+<!-- Bootstrap Switch -->
+<script src="public/adminlte/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<!-- BS-Stepper -->
+<script src="public/adminlte/plugins/bs-stepper/js/bs-stepper.min.js"></script>
 <!-- DataTables  & Plugins -->
 <script src="public/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="public/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -243,7 +288,7 @@
 <!-- AdminLTE App -->
 <script src="public/adminlte/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="public/adminlte/dist/js/demo.js"></script>
+{{-- <script src="public/adminlte/dist/js/demo.js"></script> --}}
 
 @yield("script")
 <script>

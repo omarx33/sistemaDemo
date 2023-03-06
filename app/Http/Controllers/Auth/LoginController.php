@@ -53,7 +53,7 @@ class LoginController extends Controller
          if( $user ){//El usuario ingresado existe
 
 
-             if( $user->estado == "activo" ){
+             if( $user->estado == 1 ){
 
                  $credentials = $this->validate(request(),[
 
