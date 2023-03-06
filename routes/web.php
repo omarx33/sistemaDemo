@@ -19,9 +19,9 @@ use App\Models\User;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+ Route::get('/', function () {
+     return view('auth.login');
+ });
 
 
 Route::get('/test', function () {
@@ -58,7 +58,7 @@ Route::group(['middleware' => ['can:Usuarios']], function () {
 Route::group(['middleware' => ['can:Roles']], function () {
     Route::resource('rol', RolesController::class)->middleware('auth');
 });
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::post('listaRol', [RolesController::class, 'listadoPermisos'])->middleware('can:Roles')->name('roles.listadoPermisos');
 
